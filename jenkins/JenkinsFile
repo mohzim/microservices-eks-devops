@@ -3,7 +3,8 @@ pipeline {
     docker {
       // image 'mohzimshaikh/maven-abhishek-docker-agent:v4'
       // args '--user jenkins -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-      image 'maven:3.8.5-openjdk-17'
+      //image 'maven:3.8.5-openjdk-17'
+      image 'mohzimshaikh/maven-3.9.9-jdk-17:latest'
       args '-v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     
     }
