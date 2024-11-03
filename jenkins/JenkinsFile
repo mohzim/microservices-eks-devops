@@ -37,7 +37,7 @@ pipeline {
     stage('Sleep to debug') {
       steps {
         echo "sleeping jenkins execution to debug"
-        sleep 600
+        sleep 1
       }
     }
     stage('Build and Push Docker Image') {
