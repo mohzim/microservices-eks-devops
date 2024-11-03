@@ -4,7 +4,7 @@ pipeline {
       // image 'mohzimshaikh/maven-abhishek-docker-agent:v4'
       // args '--user jenkins -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
       //image 'maven:3.8.5-openjdk-17'
-      image 'mohzimshaikh/maven-3.9.9-jdk-17:v2'
+      image 'mohzimshaikh/maven-3.9.9-jdk-17:v4'
       args '-v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     
     }
@@ -37,7 +37,7 @@ pipeline {
     stage('Sleep to debug') {
       steps {
         echo "sleeping jenkins execution to debug"
-        sleep 1000
+        sleep 1
       }
     }
     stage('Build and Push Docker Image') {
