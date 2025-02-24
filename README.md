@@ -175,3 +175,6 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 1. Update docker image to inherit from alpine version and verify CVE.
 2. Add Persistent Volume for Prometheus and Grafana. 
 3. Setup and verify Velero backup and resoration solution. 
+
+## Notes and Refrence Links
+- Link to Microservices source aws [github](https://github.com/aws-containers/retail-store-sample-app). 
