@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: some-deployment
+  labels:
+    app: some-app
+    role: backend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: some-app
+      role: backend
+  template:
+    metadata:
+      labels:
+        app: some-app
+        role: backend
+    spec:
+      volumes:
+        - name: my-storage-class
+          persistentVolumeClaim:
+          claimName: some-claim
+      containers:
+        - name: some-app
+          image: nginx:1.17.8-alpine
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
+          env:
+            - name: APPLICATION_NAME
+              value: "some-app"
+          ports:
+            - containerPort: 80
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 5m
+              memory: 10Mi
