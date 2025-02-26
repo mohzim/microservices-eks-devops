@@ -2,12 +2,13 @@
 DevOps project to deploy microservices based application on AWS EKS clusters using Jenkins, Helm Charts, ArgoCD, Terraform etc. 
 
 ## Overview
-This repo provides steps to migrate legacy platform to AWS cloud environment, define architecture following best practices of security and business continuty and implement the solution on AWS Cloud using Kubernetes, Terraform, Jenkins and ArgoCD.   sets up Kubernetes cluster on IONOS Cloud using terraform. It deploys highly available web appliction (wordpress-nginx) with helm charts. Additonally provides instruction to setup Prometheus and Grafana for monitoring as well as Velero for Backup solution for Kubernetes clusters. 
+This repo provides steps to migrate legacy platform to AWS cloud environment, define architecture following best practices of security and business continuty and implement the solution on AWS Cloud using Kubernetes, Terraform, Jenkins and ArgoCD.   
+This rep sets up Kubernetes cluster on AWS Cloud using terraform. It deploys highly available web appliction (wordpress-nginx) with helm charts. Additonally provides instruction to setup Prometheus and Grafana for monitoring as well as Velero for Backup solution for Kubernetes clusters. 
 
 Please note that this repo is for demo purpose only and should not be used in Production environments. 
 
 ## Prerequisite
-1. [Download](https://docs.ionos.com/cli-ionosctl) and [configure](https://registry.terraform.io/providers/ionos-cloud/ionoscloud/latest/docs) IONOS CLI for your IONOS Account. 
+1. [Download](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [configure](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html) AWS CLI for your AWS Account. 
 2. [Download](https://git-scm.com/downloads) Git. 
 3. [Download](https://developer.hashicorp.com/terraform/install?product_intent=terraform) and install Terraform.
 4. [Download](https://helm.sh/docs/intro/install/) and and install Helm. 
@@ -19,14 +20,14 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 
 1. Clone this GitHub Repo
 
-    `git clone https://github.com/mohzim/wordpress-app-devops`
+    `git clone https://github.com/mohzim/microservices-eks-devops`
 
 
 ### Setup reources on IONOS Cloud   
 
 3. Initialize terraform
 
-    `cd terraform-ionos`
+    `cd terraform`
 
     `terraform init`
 
@@ -42,13 +43,13 @@ Please note that this repo is for demo purpose only and should not be used in Pr
         Please find below sample devops.tfvars that needs to be created in 'wordpress-app-devops/terraform-ionos/'location. 
         Replace values with actual token/username/password. 
 
-            ionos_token = "<Your IONOS Token"
+            aws_token = "<Your aws Token"
             db_username = "<Maria DB Username"
             db_password = "<Maria DB Password>"
 
 ### Setup kubectl to connect to IONOS Kubernetes Cluster
 
-6. Login into IONOS Cloud with your credentials. Go to Containers > Managed Kubernetes > Select your Kubernetes cluster > click Download kubeconfig.yaml
+6. Login into AWS Cloud with your credentials. Go to Containers > Managed Kubernetes > Select your Kubernetes cluster > click Download kubeconfig.yaml
 
 7. Rename your exising config file in ~/.kube/. 
 
@@ -58,9 +59,9 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 
     `mv ~/.kube/kubeconfig.yaml ~/.kube/config`
 
-9. Go to wordpress-app-devops/terraform-ionos folder and check you can access your kuberntes cluster with below command. 
+9. Go to wordpress-app-devops/terraform folder and check you can access your kuberntes cluster with below command. 
 
-    `cd wordpress-app-devops/terraform-ionos`
+    `cd wordpress-app-devops/terraform`
 
     `kubectl get nodes`
 
@@ -100,9 +101,9 @@ Please note that this repo is for demo purpose only and should not be used in Pr
     
 14. Expose Prometheus and Grafana service using NodePort
 
-    `kubectl apply -f terraform-ionos/manifest/prometheus-service.yaml`
+    `kubectl apply -f terraform/manifest/prometheus-service.yaml`
 
-    `kubectl apply -f terraform-ionos/manifest/grafana-service.yaml`
+    `kubectl apply -f terraform/manifest/grafana-service.yaml`
 
 15. Get Node External IP to use in step 11
 
@@ -160,7 +161,7 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 
 2. Destroy cloud resources
 
-    `cd terraform-ionos`
+    `cd terraform`
     
     `terraform destroy -var-file="devops.tfvars"`
 
