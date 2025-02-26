@@ -1,3 +1,6 @@
+# Purpose: Define the variables that will be used in the terraform code
+# The variables are defined in this file and used in the main terraform code
+
 variable "kubernetes_version" {
   default     = 1.27
   description = "kubernetes version"

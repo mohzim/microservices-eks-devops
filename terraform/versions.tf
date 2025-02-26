@@ -1,6 +1,7 @@
+# Purpose: Define the required versions of the providers used in the Terraform configuration.
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.12" # Terraform version constraint
   required_providers {
     random = {
       source  = "hashicorp/random"
@@ -18,7 +19,7 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.1.0"
     }
-    null = {
+    null = { 
       source  = "hashicorp/null"
       version = "~> 3.1.0"
     }
