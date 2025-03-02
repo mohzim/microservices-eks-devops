@@ -173,9 +173,13 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 4. kubectl expose service command throwing error while exposing grafana or prometheus service.   
 
 ## To Do List
-1. Update docker image to inherit from alpine version and verify CVE.
-2. Add Persistent Volume for Prometheus and Grafana. 
-3. Setup and verify Velero backup and resoration solution. 
+1. Test Deploy.yaml in local k8s cluster. 
+2. Split deploy.yaml into Helm charts for each application/service/database. 
+3. Configure Helm charts for ArgoCD for Dev and Production Environments. 
+4. Create Jenkins CI/CD pipeline to build and create new docker files and update Helm charts to trigger ArgoCD for Dev and Production Environment?
+4. Update docker image to inherit from alpine version and verify CVE.
+5. Add Persistent Volume for Prometheus and Grafana. 
+6. Setup and verify Velero backup and resoration solution.  
 
 ## Notes and Refrence Links
 - Link to Microservices source aws [github](https://github.com/aws-containers/retail-store-sample-app). 
