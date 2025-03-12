@@ -173,7 +173,7 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 4. kubectl expose service command throwing error while exposing grafana or prometheus service.   
 
 ## To Do List
-1. Test Deploy.yaml in local k8s cluster. 
+1. Test Deploy.yaml in local k8s cluster. (Partially worked. Estimate it to work once deployed in EKS with enough resources. )
 2. Split deploy.yaml into Helm charts for each application/service/database. 
 3. Configure Helm charts for ArgoCD for Dev and Production Environments. 
 4. Create Jenkins CI/CD pipeline to build and create new docker files and update Helm charts to trigger ArgoCD for Dev and Production Environment?
