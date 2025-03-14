@@ -48,6 +48,8 @@ Selector labels
 {{- define "ui-helm.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "ui-helm.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: service
+app.kubernetes.io/owner: retail-store-sample
 {{- end }}
 
 {{/*
