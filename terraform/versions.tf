@@ -1,6 +1,7 @@
 # Purpose: Define the required versions of the providers used in the Terraform configuration.
 
-terraform {
+terraform { 
+  backend "s3" {} # Initialize the backend configuration. Configure using parameters. 
   required_version = ">= 0.12" # Terraform version constraint
   required_providers {
     random = {
