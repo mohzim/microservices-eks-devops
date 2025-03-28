@@ -1,0 +1,45 @@
+---
+- name: Playbook To Deploy Prometheus and Grafana
+  hosts: localhost
+  gather_facts: no
+  tasks:
+  # - name: Deploy latest version of Prometheus chart inside monitoring namespace (and create it)
+  #  kubernetes.core.helm:
+  #    name: nginx-test
+  #    chart_ref: oci://registry-1.docker.io/bitnamicharts/nginx
+  #    release_namespace: default
+  #    create_namespace: false
+  #    state: absent
+
+
+  # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+  - name: Add Prometheus chart repo
+    kubernetes.core.helm_repository:
+      name: prometheus-community
+      repo_url: "https://prometheus-community.github.io/helm-charts"
+
+  # helm repo add grafana https://grafana.github.io/helm-charts
+  - name: Add Grafana chart repo
+    kubernetes.core.helm_repository:
+      name: grafana
+      repo_url: "https://grafana.github.io/helm-charts"     
+
+  # helm repo update
+
+  # helm install prometheus prometheus-community/prometheus
+  - name: Deploy latest version of Prometheus chart inside monitoring namespace (and create it)
+    kubernetes.core.helm:
+      name: prometheus
+      chart_ref: prometheus-community/prometheus
+      release_namespace: monitoring
+      create_namespace: true
+      state: present
+
+  # helm install grafana grafana/grafana
+  - name: Deploy latest version of Grafana chart inside monitoring namespace (and create it)
+    kubernetes.core.helm:
+      name: grafana
+      chart_ref: grafana/grafana
+      release_namespace: monitoring
+      create_namespace: true
+      state: present
