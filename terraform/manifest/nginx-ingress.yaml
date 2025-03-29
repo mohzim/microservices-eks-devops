@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  namespace: monitoring
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: abb0dd29ff3e54ac5a424f0bdc97ec97-804321934.ap-south-1.elb.amazonaws.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/grafana"
+        backend:
+          service:
+            name: "grafana"
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/prometheus"
+        backend:
+          service:
+            name: "prometheus-server"
+            port:
+              number: 80
