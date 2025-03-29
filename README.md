@@ -179,7 +179,10 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 4. Create Jenkins CI/CD pipeline to build and create new docker files and update Helm charts to trigger ArgoCD for Dev and Production Environment?
 4. Update docker image to inherit from alpine version and verify CVE.
 5. Add Persistent Volume for Prometheus and Grafana. 
-6. Setup and verify Velero backup and resoration solution.  
+6. Setup and verify Velero backup and resoration solution. 
+7. Configure nginx ingress controller with NLB and map to Prometheus, Grafana. 
+8. Fix dashboard issues in Prometheus.
+9. Add Persistent Volume for Prometheus and Grafana (ideally into ansible playbook) 
 
 ## Notes and Refrence Links
 - Link to Microservices source aws [github](https://github.com/aws-containers/retail-store-sample-app). 
