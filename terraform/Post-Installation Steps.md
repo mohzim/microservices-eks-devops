@@ -1,34 +1,29 @@
-1. Add eks cluster to local kubeconfig
+1. Add k8s cluster policy to AWS User (Use UI and then add terraform scripts)
 
-    `aws eks update-kubeconfig --region region-code --name my-cluster`
+2. Add eks cluster to local kubeconfig
 
-2. Add k8s cluster policy to AWS User (Use UI and then add terraform scripts)
+    `aws eks update-kubeconfig --region ap-south-1 --name my-cluster`
+
 
 3. Change current context to eks cluster
 
     `kubectl config use-context eks-context-name`
 
-3. Run Ansible script to install Prometheus and Grafana
+4. Run Ansible script to install Prometheus and Grafana
 
     `ansible-playbook ../ansible/observability.yaml`
 
-4. Expose Prometheus and Grafana service using NodePort
+4. Get Grafana External IP and Prometheus-server internal ip
 
-    `kubectl apply -f terraform/manifest/prometheus-service.yaml`
-
-    `kubectl apply -f terraform/manifest/grafana-service.yaml`
-
-5. Get Node External IP to use in step 11
-
-    `kubectl get nodes -o wide`
+    `kubectl get service -n monitoring` 
 
 6. Get Grafana Password to use in step 11
 
-    `kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
+    `kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`
 
 7. Login into grafana
 
-    `http://<Node EXTERNAL IP>:32410`
+    `http://<LOADBALANCER URL>`
 
     Username: admin
 
@@ -36,8 +31,6 @@
 
 8. Add Prometheus Datasource and Dashboard.
 
-    a) In grafana, go to Menu > Connections > Data Sources > Add new data source > Select Prometheus. Set Prometheus server URL as http://\<Node EXTERNAL IP\>:32510 and click save.
+    a) In grafana, go to Menu > Connections > Data Sources > Add new data source > Select Prometheus. Set Prometheus server URL as http://ClusterIP and click save.
 
-    b) In grafana, go to Menu > Dashboards > New > New Dashbard > Select Import a dashboard > Enter 315 into Find and import dashboards for common applications and Click Load > Select Prometheus datasource > Click Import.  
-
-    c) In grafana, go to Menu > Dashboards > New > New Dashbard > Select Import a dashboard > Enter 741 into Find and import dashboards for common applications and Click Load > Select Prometheus datasource > Click Import. 
+    b) In grafana, go to Menu > Dashboards > New > New Dashbard > Select Import a dashboard > Enter 315 into Find and import dashboards for common applications and Click Load > Select Prometheus datasource > Click Import. Repeat this step to add Dashboard ID 741 and 15760.
