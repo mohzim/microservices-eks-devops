@@ -1,32 +1,28 @@
 ---
-- name: Playbook To Deploy Prometheus and Grafana
+- name: Playbook To Deploy nginx-ingress, Prometheus and Grafana
   hosts: localhost
   gather_facts: no
   tasks:
-  # - name: Deploy latest version of Prometheus chart inside monitoring namespace (and create it)
-  #  kubernetes.core.helm:
-  #    name: nginx-test
-  #    chart_ref: oci://registry-1.docker.io/bitnamicharts/nginx
-  #    release_namespace: default
-  #    create_namespace: false
-  #    state: absent
 
+  - name: Deploy nginx-ingress-controller 
+    kubernetes.core.helm:
+      name: nginx-ingress-controller
+      chart_ref: oci://ghcr.io/nginx/charts/nginx-ingress
+      release_namespace: default
+      create_namespace: false
+      chart_version: 2.0.1
+      state: present
 
-  # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
   - name: Add Prometheus chart repo
     kubernetes.core.helm_repository:
       name: prometheus-community
       repo_url: "https://prometheus-community.github.io/helm-charts"
 
-  # helm repo add grafana https://grafana.github.io/helm-charts
   - name: Add Grafana chart repo
     kubernetes.core.helm_repository:
       name: grafana
       repo_url: "https://grafana.github.io/helm-charts"     
 
-  # helm repo update
-
-  # helm install prometheus prometheus-community/prometheus
   - name: Deploy latest version of Prometheus chart inside monitoring namespace (and create it)
     kubernetes.core.helm:
       name: prometheus
@@ -34,8 +30,11 @@
       release_namespace: monitoring
       create_namespace: true
       state: present
+      values:
+        server:
+          persistentVolume:
+            enabled: false
 
-  # helm install grafana grafana/grafana
   - name: Deploy latest version of Grafana chart inside monitoring namespace (and create it)
     kubernetes.core.helm:
       name: grafana
@@ -43,3 +42,6 @@
       release_namespace: monitoring
       create_namespace: true
       state: present
+      values:
+        service:
+          type: LoadBalancer
