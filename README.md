@@ -183,6 +183,7 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 7. Configure nginx ingress controller with NLB and map to Prometheus, Grafana. 
 8. Fix dashboard issues in Prometheus.
 9. Add Persistent Volume for Prometheus and Grafana (ideally into ansible playbook) 
+10. Add ArgoCD to ansible playbook. Add multiple applications to sync with cluster. Check key configurations required. 
 
 ## Notes and Refrence Links
 - Link to Microservices source aws [github](https://github.com/aws-containers/retail-store-sample-app). 
