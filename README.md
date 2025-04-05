@@ -1,9 +1,9 @@
 # microservices-eks-devops
-DevOps project to deploy microservices based application on AWS EKS clusters using Jenkins, Helm Charts, ArgoCD, Terraform etc. 
+DevOps project to deploy microservices based application on AWS EKS clusters using Terraform, Ansible, Helm Charts, Jenkins and ArgoCD. 
 
 ## Overview
 This repo provides steps to migrate legacy platform to AWS cloud environment, define architecture following best practices of security and business continuty and implement the solution on AWS Cloud using Kubernetes, Terraform, Jenkins and ArgoCD.   
-This rep sets up Kubernetes cluster on AWS Cloud using terraform. It deploys highly available web appliction (wordpress-nginx) with helm charts. Additonally provides instruction to setup Prometheus and Grafana for monitoring as well as Velero for Backup solution for Kubernetes clusters. 
+This repo sets up Kubernetes cluster on AWS Cloud using terraform. It deploys microservices based application using Jenkins, Helm Charts and ArgoCD. Additonally provides instruction to setup Prometheus and Grafana for monitoring as well as Velero for Backup solution for Kubernetes clusters. 
 
 Please note that this repo is for demo purpose only and should not be used in Production environments. 
 
@@ -23,31 +23,29 @@ Please note that this repo is for demo purpose only and should not be used in Pr
     `git clone https://github.com/mohzim/microservices-eks-devops`
 
 
-### Setup reources on IONOS Cloud   
+### Setup reources on AWS Cloud   
 
 3. Initialize terraform
 
-    `cd terraform`
-
-    `terraform init`
+    `terraform -chdir=terraform init -backend-config="bucket=mohzim-terraform" -backend-config="key=terraform-microservices-eks-devops-tfstate" -backend-config="region=ap-south-1" -input=false`
 
 4. Verify resource creation
         
-    `terraform plan -var-file="devops.tfvars"`
+    `terraform -chdir=terraform plan -input=false`
 
-5. Create resources in IONOS Cloud
+5. Create resources in AWS Cloud
         
-    `terraform apply -var-file="devops.tfvars"`
+    `terraform -chdir=terraform apply -input=false -auto-approve`
 
         Note: 
-        Please find below sample devops.tfvars that needs to be created in 'wordpress-app-devops/terraform-ionos/'location. 
+        Please find below sample devops.tfvars that needs to be created in 'wordpress-app-devops/terraform-AWS/'location. 
         Replace values with actual token/username/password. 
 
             aws_token = "<Your aws Token"
             db_username = "<Maria DB Username"
             db_password = "<Maria DB Password>"
 
-### Setup kubectl to connect to IONOS Kubernetes Cluster
+### Setup kubectl to connect to AWS Kubernetes Cluster
 
 6. Login into AWS Cloud with your credentials. Go to Containers > Managed Kubernetes > Select your Kubernetes cluster > click Download kubeconfig.yaml
 
@@ -161,16 +159,11 @@ Please note that this repo is for demo purpose only and should not be used in Pr
 
 2. Destroy cloud resources
 
-    `cd terraform`
-    
-    `terraform destroy -var-file="devops.tfvars"`
+    `terraform -chdir=terraform destroy -input=false -auto-approve`
 
 
 ## Challenges
 1. Faced issues in merging nginx alpine image with php-fpm. Also in current ubuntu image nginx is not getting response from php-fpm server. Needed more time troubleshooting and marked for later. 
-2. Authentication with IONOS API failed through token if using through UI. Should generate using ionosctl.
-3. Could not find API documentation for cpu_family string for k8s nodepool creation. (Went to UI and got values from browser request F5)
-4. kubectl expose service command throwing error while exposing grafana or prometheus service.   
 
 ## To Do List
 1. Test Deploy.yaml in local k8s cluster. (Partially worked. Estimate it to work once deployed in EKS with enough resources. )
