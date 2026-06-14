@@ -11,7 +11,7 @@
 
 4. Run Ansible script to install Prometheus and Grafana
 
-    `ansible-playbook ../ansible/observability.yaml`
+    `ansible-playbook ansible/observability.yaml`
 
 4. Get Grafana External IP and Prometheus-server internal ip
 
