@@ -2,7 +2,7 @@
 # The variables are defined in this file and used in the main terraform code
 
 variable "kubernetes_version" {
-  default     = "1.31"
+  default     = "1.35"
   description = "kubernetes version"
 }
 
