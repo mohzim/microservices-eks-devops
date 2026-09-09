@@ -2,18 +2,17 @@
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.35.0"
+  version         = "~> 21.0"
   cluster_name    = local.cluster_name
   cluster_version = var.kubernetes_version
   subnet_ids      = module.vpc.private_subnets
 
-  enable_irsa = true # IAM roles for service accounts (IRSA) is a feature of Amazon EKS that lets you connect AWS IAM roles to Kubernetes service accounts. This allows applications to use AWS services while running in Kubernetes clusters
+  enable_irsa                    = true # IAM roles for service accounts (IRSA) is a feature of Amazon EKS that lets you connect AWS IAM roles to Kubernetes service accounts. This allows applications to use AWS services while running in Kubernetes clusters
   cluster_endpoint_public_access = true # Allow public access to the k8s API server
 
   tags = {
     cluster = "demo"
   }
-
 
   vpc_id = module.vpc.vpc_id
 
