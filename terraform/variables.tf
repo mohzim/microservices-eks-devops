@@ -2,7 +2,7 @@
 # The variables are defined in this file and used in the main terraform code
 
 variable "kubernetes_version" {
-  default     = "1.35"
+  default     = "1.36"
   description = "kubernetes version"
 }
 
@@ -11,6 +11,6 @@ variable "vpc_cidr" {
   description = "default CIDR range of the VPC"
 }
 variable "aws_region" {
-  default = "ap-south-1"
+  default     = "ap-south-1"
   description = "aws region"
 }
