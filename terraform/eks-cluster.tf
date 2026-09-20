@@ -16,6 +16,15 @@ module "eks" {
 
   vpc_id = module.vpc.vpc_id
 
+  addons = {
+    vpc-cni = {
+      before_compute = true # Critical: Forces CNI deployment before node groups provision
+      most_recent    = true
+    }
+    kube-proxy = { most_recent = true }
+    coredns    = { most_recent = true }
+  }
+
   # Define Node groups
   eks_managed_node_groups = {
     node_group = {
